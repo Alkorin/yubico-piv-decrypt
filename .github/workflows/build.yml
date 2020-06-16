@@ -1,0 +1,33 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.14
+      - name: Check out source code
+        uses: actions/checkout@v2
+      - name: Install yubico-piv-tool
+        run: |
+          sudo apt-get install -y autoconf automake libtool libssl-dev pkg-config check libpcsclite-dev gengetopt help2man
+          wget https://developers.yubico.com/yubico-piv-tool/Releases/yubico-piv-tool-2.0.0.tar.gz
+          tar xvfz yubico-piv-tool-2.0.0.tar.gz
+          cd yubico-piv-tool-2.0.0
+          autoreconf --install
+          ./configure
+          make
+          sudo make install
+      - name: Get dependencies
+        run: go get -v -d ./...
+      - name: Build
+        run: go build .
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: yubico-piv-decrypt-linux
+          path: yubico-piv-decrypt
+
