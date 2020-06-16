@@ -73,7 +73,7 @@ func main() {
 	}
 
 	// Ask PIN
-	fmt.Fprintf(os.Stderr, "Enter PIN for YubiKey: ")
+	fmt.Fprintf(os.Stderr, "Enter PIN: ")
 	pin, err := terminal.ReadPassword(int(os.Stdin.Fd()))
 	fmt.Fprintln(os.Stderr)
 	if err != nil {
