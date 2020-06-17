@@ -1,9 +1,9 @@
 name: Build
 on: [push]
 jobs:
-  build:
-    name: Build Linux
-    runs-on: ubuntu-latest
+  build-osx:
+    name: Build macOS
+    runs-on: macos-latest
     steps:
       - name: Set up Go 1.14
         uses: actions/setup-go@v2
@@ -13,14 +13,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Install yubico-piv-tool
         run: |
-          sudo apt-get install -y autoconf automake libtool libssl-dev pkg-config check libpcsclite-dev gengetopt help2man
-          wget https://developers.yubico.com/yubico-piv-tool/Releases/yubico-piv-tool-2.0.0.tar.gz
-          tar xvfz yubico-piv-tool-2.0.0.tar.gz
-          cd yubico-piv-tool-2.0.0
-          autoreconf --install
-          ./configure
-          make
-          sudo make install
+          wget https://developers.yubico.com/yubico-piv-tool/Releases/yubico-piv-tool-2.0.0-mac.zip
+          unzip yubico-piv-tool-2.0.0-mac.zip
       - name: Get dependencies
         run: go get -v -d ./...
       - name: Build
