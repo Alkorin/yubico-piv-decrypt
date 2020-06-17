@@ -1,10 +1,10 @@
 package main
 
 /*
-#cgo CFLAGS: -I/usr/local/include/ykpiv/ -Wall
-#cgo LDFLAGS: -l ykpiv
+#cgo linux CFLAGS: -I/usr/local/include/ykpiv -Wall
+#cgo linux LDFLAGS: -lykpiv
 #include <stdlib.h>
-#include <ykpiv/ykpiv.h>
+#include <ykpiv.h>
 */
 import "C"
 
